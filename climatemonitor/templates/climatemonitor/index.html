@@ -1,0 +1,79 @@
+{% extends "./base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<form action="{% url 'climatemonitor:index' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Search">
+</form>
+
+<canvas id="tempsChart" style="width: 100%; max-width: 1600px; height: 600px;"></canvas>
+{% endblock content %}
+
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const tempsChart = new Chart("tempsChart", {
+            type: "line",
+            data: {
+                datasets: [
+                    {% for sensor, readings in sensor_readings.items %}
+                    {
+                        label: '{{ sensor.name }}',
+                        data: [{%for reading in readings%} {x:'{{reading.created.astimezone.isoformat}}', y: {% if unit == 'f' %} {{reading.temperature_f}} {% else %} {{reading.temperature}} {%endif%}},{%endfor%}],
+                        borderColor: '{{ sensor.color }}',
+                        fill: false,
+                    },
+                    {% endfor %}
+                    {% for thermostat, history in thermostat_history.items %}
+                    {
+                        label: '{{ thermostat.name }} Set Temp',
+                        data: [{%for state in history%} {x:'{{state.created.astimezone.isoformat}}', y: {% if unit == 'f' %} {{state.set_temperature_f}} {% else %} {{state.set_temperature}} {%endif%}},{%endfor%}],
+                        backgroundColor: '{{thermostat.set_color}}',
+                        fill: false,
+                    },
+                    {% endfor %}
+                    {% for thermostat, history in thermostat_history.items %}
+                    {
+                        label: '{{ thermostat.name }} Operating State',
+                        data: [{%for state in history%} {x:'{{state.created.astimezone.isoformat}}', y: {% if state.operating_state == 'heating' %}  {% if unit == 'f' %} {{state.set_temperature_f}} {% else %} {{state.set_temperature}} {%endif%} {% else %} '{{state.operating_state}}' {%endif%} },{%endfor%}],
+                        backgroundColor: '{{thermostat.state_color}}',
+                        borderColor: '{{thermostat.state_color}}'
+                    },
+                    {% endfor %}
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    xAxes: [{
+                        type: "time",
+                        distribution: "linear",
+                        time: {     
+                            tooltipFormat: 'll HH:mm',
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        type: 'linear',
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Temperature ({{display_unit | get_item:unit}})'
+                          },
+                    }],
+
+                }
+            },
+        });
+
+
+      });
+</script>
+{% endblock scripts %}
+
+
+
+
