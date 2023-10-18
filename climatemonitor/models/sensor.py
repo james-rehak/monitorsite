@@ -77,6 +77,7 @@ class Sensor(models.Model):
                         thermostat.thermostathistory_set.create(
                             operating_state = operating_state,
                             set_temperature = set_temperature,
+                            temperature = temperature,
                             mode = mode,
                             created = now
                         )

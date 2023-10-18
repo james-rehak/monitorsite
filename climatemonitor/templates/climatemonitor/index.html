@@ -39,7 +39,7 @@
                     {% for thermostat, history in thermostat_history.items %}
                     {
                         label: '{{ thermostat.name }} Operating State',
-                        data: [{%for state in history%} {x:'{{state.created.astimezone.isoformat}}', y: {% if state.operating_state == 'heating' %}  {% if unit == 'f' %} {{state.set_temperature_f}} {% else %} {{state.set_temperature}} {%endif%} {% else %} '{{state.operating_state}}' {%endif%} },{%endfor%}],
+                        data: [{%for state in history%} {x:'{{state.created.astimezone.isoformat}}', y: {% if state.operating_state == 'heating' and state.set_temperature > state.temperature %}  {% if unit == 'f' %} {{state.set_temperature_f}} {% else %} {{state.set_temperature}} {%endif%} {% else %} '{{state.operating_state}}' {%endif%} },{%endfor%}],
                         backgroundColor: '{{thermostat.state_color}}',
                         borderColor: '{{thermostat.state_color}}'
                     },
