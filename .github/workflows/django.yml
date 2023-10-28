@@ -17,6 +17,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: create-json
+      id: create-json
+      uses: jsdaniell/create-json@1.1.2
+      with:
+        name: "config.json"
+        json: ${{ secrets.CONFIG_JSON }}
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
