@@ -1,0 +1,7 @@
+{
+    "smartthings_api_key": "api-key",
+    "database_user": "db-user",
+    "database_password": "db-pw",
+    "allowed_hosts": ["host-ip", "host"],
+    "static_root": "dir"
+}
