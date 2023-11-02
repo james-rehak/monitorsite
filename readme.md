@@ -9,10 +9,11 @@ Is a IoT web application that polls temperature sensors and services to store an
 Monitor Site is currently capable of polling RaspberryPis with DHT22 Sensors Running [Sensor Server](https://github.com/james-rehak/sensor), Samsung's [Smartthings API](https://developer.smartthings.com/docs/api/public/) for Thermostat Data, and the National Oceanic and Atmospheric Administration's (NOAA) [API Web Service](https://www.weather.gov/documentation/services-web-api) for external temperatures from the closest weather station.
 
 ## Configuration
-- TODO Sensor Configuration
-- TODO Webserver Configuration. 
-
-Sensor Polling currently initiated by crontab.
+- Deploy with Gunicorn and ngnix
+- Add cron jobs to poll sensors:
+```
+*/5 * * * * cd project_dir && project_dir/env/bin/python project_dir/manage.py getclimate {sensor_type_ids} >> project_dirlogs/get_internal_temps 2>&1
+```
 
 
 ## Roadmap
