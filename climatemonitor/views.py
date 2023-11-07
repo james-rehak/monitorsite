@@ -15,6 +15,7 @@ def get_item(dictionary, key):
 def index(request):
     template = loader.get_template("climatemonitor/index.html")
     sensor_readings = {}
+    sensor_humidity = {}
     thermostat_history = {}
 
     sensors = Sensor.objects.filter(deleted = False)

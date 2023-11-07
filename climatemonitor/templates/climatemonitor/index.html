@@ -11,6 +11,10 @@
 </form>
 
 <canvas id="tempsChart" style="width: 100%; max-width: 1600px; height: 600px;"></canvas>
+<br/>
+
+<canvas id="humidityChart" style="width: 100%; max-width: 1600px; height: 600px;"></canvas>
+
 {% endblock content %}
 
 {% block scripts %}
@@ -69,6 +73,43 @@
             },
         });
 
+
+        const humidityChart = new Chart("humidityChart", {
+            type: "line",
+            data: {
+                datasets: [
+                    {% for sensor, readings in sensor_readings.items %}
+                    {
+                        label: '{{ sensor.name }}',
+                        data: [{%for reading in readings%} {x:'{{reading.created.astimezone.isoformat}}', y:  {{reading.humidity}} },{%endfor%}],
+                        borderColor: '{{ sensor.color }}',
+                        fill: false,
+                    },
+                    {% endfor %}
+                ]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    xAxes: [{
+                        type: "time",
+                        distribution: "linear",
+                        time: {     
+                            tooltipFormat: 'll HH:mm',
+                        }
+                    }],
+                    yAxes: [{
+                        display: true,
+                        type: 'linear',
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Humidity'
+                          },
+                    }],
+
+                }
+            },
+        });
 
       });
 </script>

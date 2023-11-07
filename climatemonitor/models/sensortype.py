@@ -7,6 +7,6 @@ class SensorType(models.Model):
     deleted = models.BooleanField(default=False)
 
 
-    def __str__(self):
-        return str(self.id) + ': ' + self.name
+    def __str__(self) -> str:
+        return "{}: {}".format(self.id, self.name)
     

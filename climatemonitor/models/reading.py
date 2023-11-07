@@ -10,7 +10,8 @@ class Reading(models.Model):
     created = models.DateTimeField("date recorded")
 
     def __str__(self):
-        return str(self.sensor) + ' ' + str(self.temperature) + ' ' + str(self.created.strftime('%Y-%m-%d %H:%M:%S'))
+        # return str(self.sensor) + ' ' + str(self.temperature) + ' ' + str(self.created.strftime('%Y-%m-%d %H:%M:%S'))
+        return "{} {} {}".format(self.sensor, self.temperature, self.created.strftime('%Y-%m-%d %H:%M:%S'))
     
     @property
     def temperature_f(self):

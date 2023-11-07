@@ -12,7 +12,7 @@ class ThermostatHistory(models.Model):
     created = models.DateTimeField("date recorded")
 
     def __str__(self):
-        return self.thermostat + ' ' + self.operating_state + ' ' + self.set_temperature
+        return "{} {} {}".format(self.thermostat, self.operating_state, self.set_temperature)
     
     @property
     def set_temperature_f(self):

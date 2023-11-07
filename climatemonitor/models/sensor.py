@@ -119,5 +119,4 @@ class Sensor(models.Model):
                 message = "{} Error: No sensor Type Found \n".format(now.strftime('%Y-%m-%d %H:%M:%S'))
             
         return message
-
-
+    
