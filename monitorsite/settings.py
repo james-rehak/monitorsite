@@ -97,7 +97,7 @@ DATABASES = {
         'NAME': 'climate_monitor',
         'USER': config.get('database_user'),
         'PASSWORD': config.get('database_password'),
-        'HOST': 'localhost',
+        'HOST': config.setdefault('database_host', 'localhost'),
         'PORT': '3306'
     }
 }

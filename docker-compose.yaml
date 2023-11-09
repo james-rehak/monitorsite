@@ -1,0 +1,11 @@
+version: '3.11'
+services:
+ app:
+  build: .
+  volumes:
+   - .:/monitorsite
+  ports:
+   - 8000:8000
+  image: app:monitorsite
+  container_name: monitorsite_container
+  command: python manage.py runserver 0.0.0.0:8000
