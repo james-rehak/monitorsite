@@ -22,6 +22,11 @@ from django.views.generic import RedirectView
 urlpatterns = [
     path('', RedirectView.as_view(pattern_name='climatemonitor:index')),
     path('admin/', admin.site.urls),
+    path('climatemonitor/', include('django.contrib.auth.urls')),
     path('climatemonitor/', include('climatemonitor.urls')),
     path("__debug__/", include("debug_toolbar.urls")),
 ]
+
+
+admin.site.site_title = "Climate Monitor"
+admin.site.site_header = "Climate Monitor Administration"
