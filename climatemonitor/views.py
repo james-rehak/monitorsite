@@ -1,6 +1,6 @@
 from django.shortcuts import HttpResponse, render, redirect
 from django.template import loader
-from .models import Sensor, Thermostat
+from .models import Sensor, Thermostat, UserSetting
 from django.utils import timezone
 import datetime
 from django.template.defaulttags import register
@@ -21,14 +21,24 @@ def index(request):
     sensor_readings = {}
     sensor_humidity = {}
     thermostat_history = {}
-
+    user = request.user
+    
     sensors = Sensor.objects.filter(deleted = False)
     thermostats = Thermostat.objects.filter(deleted = False)
 
     display_unit = {'c': 'C', 'f': 'F'}
 
+    prefered_unit = user.usersetting_set.filter(setting__name="temperature unit").first()
+
+    if prefered_unit:
+        prefered_unit = prefered_unit.value.lower()
+
+    if prefered_unit not in ['c','f']:
+        prefered_unit = 'c'
+
+
     form = SearchForm(initial={
-        'unit': 'c', 
+        'unit': prefered_unit, 
         'start_date': timezone.now()- datetime.timedelta(hours=2),
         'end_date': timezone.now()
     })
@@ -48,6 +58,9 @@ def index(request):
 
     for sensor in sensors:
         sensor_readings[sensor] = sensor.reading_set.filter(created__gte = start_date, created__lte = end_date)
+
+        for reading in sensor_readings[sensor]:
+            print(reading)
 
 
     for thermostat in thermostats:

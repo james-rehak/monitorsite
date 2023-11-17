@@ -8,5 +8,5 @@ class SensorType(models.Model):
 
 
     def __str__(self) -> str:
-        return "{}: {}".format(self.id, self.name)
+        return f"{self.id}: {self.name}"
     
