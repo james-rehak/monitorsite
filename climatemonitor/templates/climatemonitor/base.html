@@ -8,8 +8,10 @@
     <title>Climate Monitor</title>
 </head>
 <body>    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <!-- https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js -->
+    <!-- https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js -->
+    <script src="{% static 'climatemonitor/moment.min.js'%}"></script>
+    <script src="{% static 'climatemonitor/Chart.min.js'%}"></script>
     <link rel="stylesheet" href="{% static 'climatemonitor/style.css' %}">
 
     <div class="nav">
@@ -24,8 +26,8 @@
         {% endif %}
     </div>
 
-    {%block scripts%}
-    {% endblock scripts%}
+    {% block scripts %}
+    {% endblock scripts %}
 
     {% block content %}
     {% endblock content %}
