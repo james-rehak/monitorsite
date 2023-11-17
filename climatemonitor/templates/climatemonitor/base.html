@@ -10,11 +10,15 @@
 <body>    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <link rel="stylesheet" href="{% static 'climatemonitor/style.css' %}">
 
-    <div style="text-align:right;">
+    <div class="nav">
         {% if user.is_authenticated %}
-            <ul style="list-style: none;">
-                <li style="display: inline">{{user.username}}</li>
+            <ul class="nav">
+                <li style="display: inline">{{user.username}} | </li>
+            {% if user.is_staff %}
+                <li ><a href="{% url "admin:index" %}">Admin Site</a> | </li>
+            {% endif %}
                 <li style="display: inline"><a href="{% url "climatemonitor:signout" %}">Log Out</a></li>
             </ul>
         {% endif %}
