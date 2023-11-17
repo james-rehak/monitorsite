@@ -30,6 +30,7 @@ SECRET_KEY = 'django-insecure-m0-*86v%ci)+vr^3e8t#0aout_m9udtbmyqur#om_!e5@-qdh&
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+LOGIN_URL = '/climatemonitor/signin'
 
 ALLOWED_HOSTS = config.get('allowed_hosts')
 

@@ -11,6 +11,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 
+    <div style="text-align:right;">
+        {% if user.is_authenticated %}
+            <ul style="list-style: none;">
+                <li style="display: inline">{{user.username}}</li>
+                <li style="display: inline"><a href="{% url "climatemonitor:signout" %}">Log Out</a></li>
+            </ul>
+        {% endif %}
+    </div>
+
     {%block scripts%}
     {% endblock scripts%}
 
