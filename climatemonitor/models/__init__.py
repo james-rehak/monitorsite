@@ -5,3 +5,4 @@ from .thermostat import Thermostat
 from .thermostathistory import ThermostatHistory
 from .setting import Setting
 from .usersetting import UserSetting
+from .alarm import Alarm
