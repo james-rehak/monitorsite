@@ -6,3 +6,5 @@ from .thermostathistory import ThermostatHistory
 from .setting import Setting
 from .usersetting import UserSetting
 from .alarm import Alarm
+from .alarmemail import AlarmEmail
+from .alarmhistory import AlarmHistory
