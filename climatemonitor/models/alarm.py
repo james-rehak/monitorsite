@@ -1,11 +1,13 @@
 from django.db import models
 from . import Sensor
 from ..utils import * 
+from django.utils import timezone
+
 
 class Alarm(models.Model):
     sensor = models.ForeignKey(Sensor, on_delete=models.DO_NOTHING)
     temperature = models.DecimalField(max_digits=5, decimal_places=1) # Celcius
-    threshold_mintue = models.DecimalField(max_digits=5, decimal_places=1)
+    threshold = models.DurationField()
     start_time = models.TimeField()
     end_time = models.TimeField()
     override_sensor = models.ForeignKey(Sensor, on_delete=models.DO_NOTHING, related_name="override_sensors")
@@ -23,3 +25,10 @@ class Alarm(models.Model):
     def override_temperature_f(self):
         return round(convert_celcius_to_fahrenheit(self.override_temperature))
     
+
+    def send_alert(self):
+        self.alarmhistory_set.create(
+            created = timezone.now()
+        )
+        for alarm_email in self.alarmemail_set.filter(deleted = False):
+            alarm_email.send_mail()
