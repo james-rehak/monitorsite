@@ -6,4 +6,4 @@ class AlarmHistory(models.Model):
     created = models.DateTimeField("date recorded")
 
     def __str__(self) -> str:
-        return f"{self.alarm}: {self.created}"
+        return f"{self.alarm}. Triggered: {self.created: %Y-%m-%d %H:%M:%S}"

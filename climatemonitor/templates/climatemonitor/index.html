@@ -13,6 +13,35 @@
 <canvas id="tempsChart" style="width: 100%; max-width: 1600px; height: 600px;"></canvas>
 <br/>
 
+{% if triggered_alarms %}
+    <h3>Alarms</h3>
+    <table style="width: 100%">
+        <thead>
+            <tr>
+                <th>Sensor</th>
+                <th>Schedule</th>
+                <th>Temperature</th>
+                <th>Triggered</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for triggered_alarm in triggered_alarms %}
+            <tr>
+                <td>{{triggered_alarm.alarm.sensor}}</td>
+                <td>{{triggered_alarm.alarm.display_range}}</td>
+                {% if unit == 'f' %}
+                <td>{{triggered_alarm.alarm.temperature_f}}</td>
+                {% else %}
+                <td>{{triggered_alarm.alarm.temperature}}</td>
+                {% endif %}
+                <td>{{triggered_alarm.created}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+{% endif %}
+
 <canvas id="humidityChart" style="width: 100%; max-width: 1600px; height: 600px;"></canvas>
 
 {% endblock content %}
@@ -114,7 +143,5 @@
       });
 </script>
 {% endblock scripts %}
-
-
 
 

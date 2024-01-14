@@ -15,7 +15,10 @@ class Alarm(models.Model):
     deleted = models.BooleanField(default=False)
 
     def __str__(self) -> str:
-        return f"{self.sensor.name} ({self.start_time} - {self.end_time}) {self.temperature}"
+        return f"{self.sensor.name} ({self.start_time} - {self.end_time}): {self.temperature}"
+    
+    def display_range(self):
+        return f"{self.start_time} - {self.end_time}"
 
     @property
     def temperature_f(self):
