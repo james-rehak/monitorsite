@@ -2,6 +2,9 @@ from django.db import models
 from . import Sensor
 from ..utils import * 
 from django.utils import timezone
+from django.conf import settings
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail, To
 
 
 class Alarm(models.Model):
@@ -30,8 +33,41 @@ class Alarm(models.Model):
     
 
     def send_alert(self):
-        self.alarmhistory_set.create(
+        alert = self.alarmhistory_set.create(
             created = timezone.now()
         )
+
+        email_list = {}
+
+        from_email = settings.ALERT_FROM_EMAIL
+
+        if not is_email(from_email):
+            print("Done Alerting. No From Email configured.")
+            return 
+
         for alarm_email in self.alarmemail_set.filter(deleted = False):
-            alarm_email.send_mail()
+            email_list[alarm_email.email] = To(alarm_email.email)
+
+        if not email_list:
+            print("Done Alerting. No emails associated with Alarm.")
+            return 
+        
+        to_email_list = list(email_list.values())
+        email_list_keys = list(email_list.keys())
+
+        message = Mail(
+                from_email= from_email,
+                to_emails= to_email_list,
+                subject=f"Temperature Alarm: {timezone.localtime(alert.created).strftime('%a, %b %-d, %-I:%M %p')}",
+                html_content=f"Alert for {self} at {timezone.localtime(alert.created).strftime('%Y-%m-%d %H:%M:%S')}"
+            )
+
+        try:
+            sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+            response = sg.send(message)
+            print(f"Response Status: {response.status_code}")
+            print(f"Alerts sent to {email_list_keys}")
+        except Exception as e:
+            print(e)
+
+        return

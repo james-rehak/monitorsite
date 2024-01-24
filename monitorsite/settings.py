@@ -17,6 +17,8 @@ config_data = open('config.json')
 config = json.load(config_data)
 
 SMARTTHINGS_API_KEY = config.get('smartthings_api_key')
+SENDGRID_API_KEY = config.get('sendgrid_api_key')
+ALERT_FROM_EMAIL = config.get('alert_from_email')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

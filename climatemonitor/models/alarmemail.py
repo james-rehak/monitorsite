@@ -10,6 +10,3 @@ class AlarmEmail(models.Model):
     def __str__(self) -> str:
         return f"{self.alarm}: {self.email}"
     
-    def send_mail(self):
-        print(f"sending: {self.email}")
-        return 

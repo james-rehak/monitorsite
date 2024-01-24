@@ -19,7 +19,7 @@ Monitor Site is currently capable of polling RaspberryPis with DHT22 Sensors Run
 
 ## Roadmap
 - ~~Add Users Accounts for preferences~~
-- Add Alerts with email notifications
+- ~~Add Alerts with email notifications~~
 - Async Frontend
 - Deploy as Progressive Web App
 - Automated and predictive Thermostat Control based on internal and external input data
