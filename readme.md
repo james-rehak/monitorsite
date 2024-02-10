@@ -14,12 +14,12 @@ Monitor Site is currently capable of polling RaspberryPis with DHT22 Sensors Run
 - Add cron jobs to poll sensors:
 ```
 */5 * * * * cd project_dir && project_dir/virtual_environment/bin/python project_dir/manage.py getclimate {sensor_type_ids} >> project_dirlogs/get_internal_temps 2>&1
+
+*/5 * * * * cd project_dir && project_dir/virtual_environment/bin/python project_dir/manage.py checkalarms {sensor_type_ids} >> project_dirlogs/check_alarms 2>&1
 ```
 
 
 ## Roadmap
 - ~~Add Users Accounts for preferences~~
 - ~~Add Alerts with email notifications~~
-- Async Frontend
-- Deploy as Progressive Web App
 - Automated and predictive Thermostat Control based on internal and external input data

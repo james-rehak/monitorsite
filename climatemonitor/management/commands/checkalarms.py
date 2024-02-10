@@ -13,7 +13,7 @@ class Command(BaseCommand):
         alarms = Alarm.objects.filter(deleted = False)
 
         self.stdout.write(
-            self.style.SUCCESS(f"Checking Alarms {now.strftime('%Y-%m-%d %H:%M:%S')}")
+            self.style.SUCCESS(f"{now.strftime('%Y-%m-%d %H:%M:%S')} Checking Alarms")
         )
 
         for alarm in alarms:
