@@ -28,8 +28,16 @@ class Command(BaseCommand):
 
                 current_temperature = sensor.reading_set.filter(created__gte = threshold_time).values_list("temperature", flat=True).last()
 
+                if not current_temperature and alarm.alert_offline:
+                    alert_sent = alarm.alarmhistory_set.filter(created__gte = threshold_time, sensor_offline = True).last()
+
+                    if not alert_sent:
+                        alarm.send_alert(offline=True)
+                    else:
+                        message += f"Sensor Offline Alert already sent on {alert_sent.created}\n"
+
                 if current_temperature and current_temperature < alarm.temperature:
-                    alert_sent = alarm.alarmhistory_set.filter(created__gte = threshold_time).last()
+                    alert_sent = alarm.alarmhistory_set.filter(created__gte = threshold_time, sensor_offline = False).last()
 
                     if not alert_sent:
                         alarm.send_alert()

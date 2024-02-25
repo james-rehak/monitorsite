@@ -15,6 +15,7 @@ class Alarm(models.Model):
     end_time = models.TimeField()
     override_sensor = models.ForeignKey(Sensor, on_delete=models.DO_NOTHING, related_name="override_sensors")
     override_temperature = models.DecimalField(max_digits=5, decimal_places=1) # Celcius
+    alert_offline = models.BooleanField(default=False)
     deleted = models.BooleanField(default=False)
 
     def __str__(self) -> str:
@@ -32,8 +33,9 @@ class Alarm(models.Model):
         return round(convert_celcius_to_fahrenheit(self.override_temperature))
     
 
-    def send_alert(self):
+    def send_alert(self, offline=False):
         alert = self.alarmhistory_set.create(
+            sensor_offline = offline,
             created = timezone.now()
         )
 
@@ -55,10 +57,15 @@ class Alarm(models.Model):
         to_email_list = list(email_list.values())
         email_list_keys = list(email_list.keys())
 
+        subject_text = f"Temperature Alarm: {timezone.localtime(alert.created).strftime('%a, %b %-d, %-I:%M %p')}"
+
+        if offline:
+            subject_text = f"Sensor Offline Alarm: {timezone.localtime(alert.created).strftime('%a, %b %-d, %-I:%M %p')}"
+
         message = Mail(
                 from_email= from_email,
                 to_emails= to_email_list,
-                subject=f"Temperature Alarm: {timezone.localtime(alert.created).strftime('%a, %b %-d, %-I:%M %p')}",
+                subject = subject_text,
                 html_content=f"Alert for {self} at {timezone.localtime(alert.created).strftime('%Y-%m-%d %H:%M:%S')}"
             )
 
