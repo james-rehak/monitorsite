@@ -27,7 +27,7 @@
         <tbody>
             {% for triggered_alarm in triggered_alarms %}
             <tr>
-                <td>{{triggered_alarm.alarm.sensor}}</td>
+                <td>{{triggered_alarm.alarm.sensor}} {% if triggered_alarm.sensor_offline %}<b>(Offline)</b>{% endif %}</td>
                 <td>{{triggered_alarm.alarm.display_range}}</td>
                 {% if unit == 'f' %}
                 <td>{{triggered_alarm.alarm.temperature_f}}</td>
