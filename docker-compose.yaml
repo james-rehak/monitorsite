@@ -1,5 +1,24 @@
-version: '3.11'
 services:
+ db:
+  image: mysql:8.0
+  container_name: monitorsite_db
+  restart: always
+  env_file:
+   - .env
+  volumes:
+     - ./${MYSQL_DATA_DIR}:/var/lib/mysql
+     - ./.my.cnf:/root/.my.cnf
+  environment:
+   MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+   MYSQL_DATABASE: ${MYSQL_DATABASE}
+   MYSQL_USER: ${MYSQL_USER}
+   MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+  ports:
+   - "3306:3306"
+  healthcheck:
+   test: [ "CMD", "mysql", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}", "-e", "SELECT 1" ]
+   timeout: 20s
+   retries: 10
  app:
   build: .
   volumes:
@@ -8,4 +27,17 @@ services:
    - 8000:8000
   image: app:monitorsite
   container_name: monitorsite_container
-  command: python manage.py runserver 0.0.0.0:8000
+#  restart: unless-stopped
+  extra_hosts:
+   - "host.docker.internal:host-gateway"
+  tty: true
+#  command: python manage.py runserver 0.0.0.0:8000
+  env_file:
+   - .env
+  depends_on:
+   db:
+      condition: service_healthy
+  environment:
+   - DB_HOST=db
+volumes:
+  data:

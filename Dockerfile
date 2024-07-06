@@ -1,4 +1,4 @@
-FROM python:3.11-buster
+FROM python:3.11-bullseye
 
 ENV PYTHONBUFFERED=1
 
@@ -14,5 +14,5 @@ COPY . .
 
 RUN  chmod +x manage.py
 
-CMD python manage.py runserver 0.0.0.0:8000
+#CMD python manage.py runserver 0.0.0.0:8000
 

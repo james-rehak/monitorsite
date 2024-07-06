@@ -10,15 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-from pathlib import Path
 import json
+import os
+from pathlib import Path
 
-config_data = open('config.json')
-config = json.load(config_data)
-
-SMARTTHINGS_API_KEY = config.get('smartthings_api_key')
-SENDGRID_API_KEY = config.get('sendgrid_api_key')
-ALERT_FROM_EMAIL = config.get('alert_from_email')
+SMARTTHINGS_API_KEY = os.getenv('smartthings_api_key')
+SENDGRID_API_KEY = os.getenv('sendgrid_api_key')
+ALERT_FROM_EMAIL = os.getenv('alert_from_email')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,13 +26,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-m0-*86v%ci)+vr^3e8t#0aout_m9udtbmyqur#om_!e5@-qdh&'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG')
 LOGIN_URL = '/climatemonitor/signin'
 
-ALLOWED_HOSTS = config.get('allowed_hosts')
+ALLOWED_HOSTS = json.loads(os.getenv('allowed_hosts'))
 
 INTERNAL_IPS = [
     # ...
@@ -99,9 +97,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'climate_monitor',
-        'USER': config.get('database_user'),
-        'PASSWORD': config.get('database_password'),
-        'HOST': config.setdefault('database_host', 'localhost'),
+        'USER': os.getenv('MYSQL_USER'),
+        'PASSWORD': os.getenv('MYSQL_PASSWORD'),
+        'HOST': os.getenv('database_host'),
         'PORT': '3306'
     }
 }
@@ -142,14 +140,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = config.get('static_root')
+STATIC_ROOT = os.getenv('static_root')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-
-config_data.close
 
