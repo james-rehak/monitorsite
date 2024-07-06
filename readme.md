@@ -9,7 +9,7 @@ Is a IoT web application that polls temperature sensors and services to store an
 Monitor Site is currently capable of polling RaspberryPis with DHT22 Sensors Running [Sensor Server](https://github.com/james-rehak/sensor), Samsung's [Smartthings API](https://developer.smartthings.com/docs/api/public/) for Thermostat Data, and the National Oceanic and Atmospheric Administration's (NOAA) [API Web Service](https://www.weather.gov/documentation/services-web-api) for external temperatures from the closest weather station.
 
 ## Configuration
-- Create config.json based on example-config.json in project directory
+- Create .env based on keys set in settings.py in project directory
 - Deploy with Gunicorn and ngnix
 - Add cron jobs to poll sensors:
 ```
@@ -23,3 +23,12 @@ Monitor Site is currently capable of polling RaspberryPis with DHT22 Sensors Run
 - ~~Add Users Accounts for preferences~~
 - ~~Add Alerts with email notifications~~
 - Automated and predictive Thermostat Control based on internal and external input data
+
+## Local Development
+```bash
+docker compose build
+docker compose up -d
+# run migrations
+docker exec -ti monitorsite_container /bin/bash
+python manage.py runserver 0.0.0.0:8000
+```
