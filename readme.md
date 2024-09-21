@@ -28,6 +28,8 @@ Monitor Site is currently capable of polling RaspberryPis with DHT22 Sensors Run
 ```bash
 docker compose build
 docker compose up -d
+docker exec -i <db_container_name> mysql climate_monitor < /path/to/script.sql
+
 # run migrations
 docker exec -ti monitorsite_container /bin/bash
 python manage.py runserver 0.0.0.0:8000

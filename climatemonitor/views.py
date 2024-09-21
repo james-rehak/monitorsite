@@ -100,3 +100,6 @@ def signout(request):
     logout(request)
     messages.success(request, ("Successfully Logged Out!"))
     return redirect('climatemonitor:signin')
+
+def attributions(request):
+    return render(request, 'climatemonitor/attributions.html');
