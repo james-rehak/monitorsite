@@ -13,6 +13,19 @@ td, th {
     text-align: left;
 }
 
+.spacey {
+    padding-bottom: min(50vh);
+}
+
+.footer-links > li > a {
+    color: #acacac;
+}
+
+footer {
+    bottom: 0;
+    width: 100%;
+}
+
 @media (prefers-color-scheme: dark) {
     html[data-theme=""], html[data-theme="dark"] {
       --primary: #264b5d;

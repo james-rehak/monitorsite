@@ -6,5 +6,6 @@ app_name = "climatemonitor"
 urlpatterns = [
     path("", views.index, name = 'index'),
     path("signin", views.signin, name="signin"),
-    path("signout", views.signout, name="signout")
+    path("signout", views.signout, name="signout"),
+    path("attributions", views.attributions, name="attributions")
 ]

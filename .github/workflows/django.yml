@@ -23,6 +23,11 @@ jobs:
       with:
         name: "config.json"
         json: ${{ secrets.CONFIG_JSON }}
+    - name: create-dot-env
+      env:
+        ENV_FILE: ${{ secrets.ENV }}
+      run: |
+        echo "$ENV_FILE" > .env
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
