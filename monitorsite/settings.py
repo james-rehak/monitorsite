@@ -32,7 +32,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG')
 LOGIN_URL = '/climatemonitor/signin'
 
-ALLOWED_HOSTS = json.loads(os.getenv('allowed_hosts'))
+ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS').split(' ')
 
 INTERNAL_IPS = [
     # ...
