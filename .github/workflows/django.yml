@@ -16,13 +16,6 @@ jobs:
         python-version: ['3.10', '3.11', '3.12']
 
     steps:
-    - uses: actions/checkout@v3
-    - name: create-json
-      id: create-json
-      uses: jsdaniell/create-json@1.1.2
-      with:
-        name: "config.json"
-        json: ${{ secrets.CONFIG_JSON }}
     - name: create-dot-env
       env:
         ENV_FILE: ${{ secrets.ENV }}
